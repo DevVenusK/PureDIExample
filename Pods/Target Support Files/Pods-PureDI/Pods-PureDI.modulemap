@@ -1,0 +1,6 @@
+framework module Pods_PureDI {
+  umbrella header "Pods-PureDI-umbrella.h"
+
+  export *
+  module * { export * }
+}
