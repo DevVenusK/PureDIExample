@@ -7,22 +7,21 @@
 
 import UIKit
 
+import Pure
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    private let dependency: AppDependency
+    let dependency: AppDependency
     var window: UIWindow?
     
     private override init() {
         self.dependency = AppDependency.resolve()
-        super.init()
-    }
-    
-    init(dependency: AppDependency) {
-        self.dependency = dependency
-        super.init()
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        self.window = self.dependency.window
+        window?.makeKeyAndVisible()
         return true
     }
 }

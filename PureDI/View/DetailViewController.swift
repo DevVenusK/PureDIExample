@@ -9,40 +9,31 @@ import UIKit
 
 import Pure
 
-class DetailViewController: UIViewController, ConfiguratorModule {
-    func configure(dependency: (), payload: ()) {
-        <#code#>
+class DetailViewController: UIViewController, FactoryModule {
+    required init(dependency: Dependency, payload: (Payload)) {
+        self.imageDownloader = dependency.imageDownloader
+        self.id = payload.id
+        super.init(nibName: nil, bundle: nil)
     }
     
- 
-    func configure(dependency: Dependency, payload: Payload) {
-        
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
-//
-//    func configure(dependency: Dependency, payload: Payload) {
-//
-//    }
     
-//    func configure(dependency: Dependency, payload: Payload) {
-//
-//    }
+    struct Dependency {
+        let imageDownloader: ImageDownloaderType
+    }
     
+    struct Payload {
+        let id: Int
+    }
+    
+    var imageDownloader: ImageDownloaderType?
+    var id: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor.purple
+        print(id)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

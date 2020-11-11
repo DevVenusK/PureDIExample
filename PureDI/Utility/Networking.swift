@@ -7,6 +7,10 @@
 
 import Foundation
 
-final class Networking {
+protocol NetworkingType {
+    func reqeust()
+}
+
+final class Networking: NetworkingType {
     func reqeust() { }
 }
