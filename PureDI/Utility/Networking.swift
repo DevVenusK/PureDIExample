@@ -18,7 +18,6 @@ final class Networking: NetworkingType {
             let deocde = try? JSONDecoder().decode(T.self, from: data!)
             completionHandler(deocde!)
         }
-        
         task.resume()
     }
 }
@@ -29,10 +28,18 @@ struct Repositories: Codable {
 
 struct Items: Codable {
     let fullName: String?
-    let avatarurl: String?
+    let owner: Owner?
     
     enum CodingKeys: String, CodingKey {
         case fullName = "full_name"
-        case avatarurl = "avatar_url"
+        case owner
+    }
+}
+
+struct Owner: Codable {
+    let avatarURL: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case avatarURL = "avatar_url"
     }
 }

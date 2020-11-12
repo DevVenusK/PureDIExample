@@ -11,8 +11,7 @@ import Pure
 
 class DetailViewController: UIViewController, FactoryModule {
     
-    @IBOutlet var avatarImageView: UIImageView!
-    
+    @IBOutlet weak var avatarImageView: UIImageView!
     
     required init(dependency: Dependency, payload: (Payload)) {
         self.imageDownloader = dependency.imageDownloader
@@ -25,6 +24,7 @@ class DetailViewController: UIViewController, FactoryModule {
     }
     
     struct Dependency {
+        let storyboard: UIStoryboard
         let imageDownloader: ImageDownloaderType
     }
     
@@ -37,10 +37,21 @@ class DetailViewController: UIViewController, FactoryModule {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.purple
         guard let url = URL(string: imageURL!) else { return }
         imageDownloader?.image(url, completionHandler: { (image) in
-            self.avatarImageView.image = image
+            DispatchQueue.main.async {
+                self.avatarImageView.image = image
+            }
         })
+    }
+}
+
+// For Storyboard
+extension Factory where Module == DetailViewController {
+    func create(payload: DetailViewController.Payload) -> DetailViewController {
+        let module = self.dependency.storyboard.instantiateViewController(identifier: "DetailViewController") as! Module
+        module.imageDownloader = dependency.imageDownloader
+        module.imageURL = payload.imageURL
+        return module
     }
 }

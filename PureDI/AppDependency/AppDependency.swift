@@ -23,6 +23,7 @@ extension AppDependency {
         
         let detailViewControllerFactory = DetailViewController.Factory(
             dependency: .init(
+                storyboard: UIStoryboard.init(name: "Main", bundle: nil),
                 imageDownloader: imageDownloader
             )
         )
@@ -34,7 +35,6 @@ extension AppDependency {
                 listTableViewCellConfigurator: listTableViewCellConfigurator
             )
         )
-        
         return AppDependency(
             window: window
         )

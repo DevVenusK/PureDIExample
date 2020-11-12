@@ -77,7 +77,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="9D3-A2-XGC"/>
                     <connections>
-                        <outlet property="avatarImageView" destination="6rd-DF-dRO" id="GHy-mD-Zkr"/>
+                        <outlet property="avatarImageView" destination="6rd-DF-dRO" id="aQd-jh-TBh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

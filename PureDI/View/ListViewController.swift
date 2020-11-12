@@ -65,7 +65,8 @@ class ListViewController: UITableViewController, FactoryModule {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = detailViewFactory?.create(payload: .init(imageURL: items[indexPath.item].avatarurl!))
-        present(viewController!, animated: true, completion: nil)
+        let viewController = detailViewFactory!
+            .create(payload: .init(imageURL: (items[indexPath.item].owner?.avatarURL!)!))
+        present(viewController, animated: true, completion: nil)
     }
 }
