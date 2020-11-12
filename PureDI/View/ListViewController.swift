@@ -21,6 +21,8 @@ class ListViewController: UITableViewController, FactoryModule {
     var detailViewFactory: DetailViewController.Factory?
     var listTableViewCellConfigurator: ListTableViewCell.Configurator?
     
+    var items: [Items] = []
+    
     required init(dependency: Dependency, payload: ()) {
         self.networking = dependency.networking
         self.detailViewFactory = dependency.detailViewFactory
@@ -34,6 +36,16 @@ class ListViewController: UITableViewController, FactoryModule {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var url = URLComponents(string: "https://api.github.com/search/repositories")!
+        url.query = "q=rxswift"
+        
+        networking?.reqeust(url: url.url!, data: Repositories.self) { data in
+            self.items = data.items
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        
         tableView.register(ListTableViewCell.self, forCellReuseIdentifier: "ListTableViewCell")
     }
     
@@ -43,18 +55,17 @@ class ListViewController: UITableViewController, FactoryModule {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListTableViewCell", for: indexPath)
-        cell.textLabel?.text = "1234"
-        listTableViewCellConfigurator?.configure(cell as! ListTableViewCell, payload: .init(image: UIImage()))
+        listTableViewCellConfigurator?.configure(cell as! ListTableViewCell, payload: .init(fullName: items[indexPath.item].fullName!))
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = detailViewFactory?.create(payload: .init(id: indexPath.item))
+        let viewController = detailViewFactory?.create(payload: .init(imageURL: items[indexPath.item].avatarurl!))
         present(viewController!, animated: true, completion: nil)
     }
 }

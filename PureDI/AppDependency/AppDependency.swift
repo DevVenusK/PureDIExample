@@ -15,15 +15,11 @@ struct AppDependency {
 
 extension AppDependency {
     static func resolve() -> AppDependency {
-        let networking = Networking()
-        let imageDownloader = ImageDownloader()
+        let networking: NetworkingType = Networking()
+        let imageDownloader: ImageDownloaderType = ImageDownloader()
         let window = UIWindow()
         
-        let listTableViewCellConfigurator = ListTableViewCell.Configurator(
-            dependency: .init(
-                imageDownloader: imageDownloader
-            )
-        )
+        let listTableViewCellConfigurator = ListTableViewCell.Configurator()
         
         let detailViewControllerFactory = DetailViewController.Factory(
             dependency: .init(

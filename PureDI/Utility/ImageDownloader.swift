@@ -5,12 +5,21 @@
 //  Created by MAXST on 2020/11/11.
 //
 
-import Foundation
+import UIKit
 
 protocol ImageDownloaderType {
-    func image()
+    func image(_ url: URL, completionHandler: @escaping ((UIImage) -> Void))
 }
 
 final class ImageDownloader: ImageDownloaderType {
-    func image() { }
+    let session = URLSession.shared
+    func image(_ url: URL, completionHandler: @escaping ((UIImage) -> Void)) {
+        session.dataTask(with: url) {
+            data, response, error in
+            guard let data = data else { return }
+            guard let image = UIImage(data: data) else { return }
+            completionHandler(image)
+        }
+        
+    }
 }

@@ -11,20 +11,12 @@ import Pure
 
 class ListTableViewCell: UITableViewCell, ConfiguratorModule {
     
-    struct Dependency {
-        let imageDownloader: ImageDownloaderType
-    }
-    
     struct Payload {
-        let image: UIImage
+        let fullName: String
     }
-    
-    var imageDownloader: ImageDownloaderType?
-    var cellImage: UIImage?
-    
+        
     func configure(dependency: (Dependency), payload: (Payload)) {
-        self.imageDownloader = dependency.imageDownloader
-        self.cellImage = payload.image
+        textLabel?.text = payload.fullName
     }
     
 
@@ -35,5 +27,4 @@ class ListTableViewCell: UITableViewCell, ConfiguratorModule {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
 }
